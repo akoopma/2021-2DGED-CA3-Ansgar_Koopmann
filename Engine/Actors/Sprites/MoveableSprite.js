@@ -38,7 +38,7 @@ class MoveableSprite extends Sprite {
             layerDepth
         );
 
-        body = new Body();
+        this.body = new Body();
     }
 
     equals(other) {
