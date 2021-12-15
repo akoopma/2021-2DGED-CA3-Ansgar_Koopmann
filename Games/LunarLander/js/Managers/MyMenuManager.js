@@ -77,8 +77,6 @@ class MyMenuManager extends MenuManager {
 
     initialize() {
 
-        // TO DO: Please make sure to hide any other menus that you have created
-
         // Hide the exit menu
         $('#exit_menu').hide();
         $('#exit_menu').addClass('hidden');
