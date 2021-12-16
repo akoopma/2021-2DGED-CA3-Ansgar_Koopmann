@@ -76,6 +76,11 @@ class Body {
         this.velocityY = velocityY;
     }
 
+    setVelocityFacing(VelocityFacing) {
+        this.velocityX = deltaVelocityFacing * this.facingX;
+        this.velocityY = deltaVelocityFacing * this.facingY;
+    }
+
     addVelocityX(deltaVelocityX) {
 
         if (Math.abs(this.velocityX + deltaVelocityX) <= this.maximumSpeed) {
@@ -88,6 +93,11 @@ class Body {
         this.velocityY += deltaVelocityY;
     }
 
+    addVelocityFacing(deltaVelocityFacing) {
+        this.velocityX += deltaVelocityFacing * this.facingX;
+        this.velocityY += deltaVelocityFacing * this.facingY;
+    }
+
     setFacingX(facingX) {
         this.facingX = facingX;
     }
@@ -98,10 +108,9 @@ class Body {
 
     turnCounterClockwise(radians) {
         radians =  -1 * radians;
-        let degrees = radians * 180/Math.PI;
 
-        let newX = Math.cos(degrees) * this.facingX - Math.sin(degrees) * this.facingY;
-        let newY = Math.sin(degrees) * this.facingX + Math.cos(degrees) * this.facingY;
+        let newX = Math.cos(radians) * this.facingX - Math.sin(radians) * this.facingY;
+        let newY = Math.sin(radians) * this.facingX + Math.cos(radians) * this.facingY;
 
         this.facingX = newX;
         this.facingY = newY;
@@ -109,10 +118,8 @@ class Body {
 
     turnClockwise(radians) {
 
-
-        let degrees = radians * 180/Math.PI;
-        let newX = Math.cos(degrees) * this.facingX - Math.sin(degrees) * this.facingY;
-        let newY = Math.sin(degrees) * this.facingX + Math.cos(degrees) * this.facingY;
+        let newX = Math.cos(radians) * this.facingX - Math.sin(radians) * this.facingY;
+        let newY = Math.sin(radians) * this.facingX + Math.cos(radians) * this.facingY;
 
         this.facingX = newX;
         this.facingY = newY;
