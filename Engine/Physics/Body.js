@@ -49,6 +49,9 @@ class Body {
         this.velocityX = 0;
         this.velocityY = 0;
 
+        this.facingX = 1;
+        this.facingY = 0;
+
         this.jumping = false;
         this.onGround = false;
     }
@@ -83,6 +86,36 @@ class Body {
 
     addVelocityY(deltaVelocityY) {
         this.velocityY += deltaVelocityY;
+    }
+
+    setFacingX(facingX) {
+        this.facingX = facingX;
+    }
+
+    setFacingY(facingY) {
+        this.facingY = facingY;
+    }
+
+    turnCounterClockwise(radians) {
+        radians =  -1 * radians;
+        let degrees = radians * 180/Math.PI;
+
+        let newX = Math.cos(degrees) * this.facingX - Math.sin(degrees) * this.facingY;
+        let newY = Math.sin(degrees) * this.facingX + Math.cos(degrees) * this.facingY;
+
+        this.facingX = newX;
+        this.facingY = newY;
+    }
+
+    turnClockwise(radians) {
+
+
+        let degrees = radians * 180/Math.PI;
+        let newX = Math.cos(degrees) * this.facingX - Math.sin(degrees) * this.facingY;
+        let newY = Math.sin(degrees) * this.facingX + Math.cos(degrees) * this.facingY;
+
+        this.facingX = newX;
+        this.facingY = newY;
     }
 
     equals(other) {
