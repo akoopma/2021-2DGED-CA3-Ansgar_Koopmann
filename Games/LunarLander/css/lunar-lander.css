@@ -29,6 +29,11 @@ body {
   background-color: rgb(29, 29, 29);
 }
 
+#guide {
+  text-align: center;
+  color: rgb(195, 195, 195);
+}
+
 #title {
   text-align: center;
   margin-top: 2rem;
