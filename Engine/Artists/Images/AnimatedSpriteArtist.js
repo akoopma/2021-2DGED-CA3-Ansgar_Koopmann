@@ -1,15 +1,14 @@
 /**
- * Renders the pixel data from a spritesheet at a source location (x, y, width, heigth) stored in the 
+ * Renders the pixel data from a spritesheet at a source location (x, y, width, heigth) stored in the
  * current cell index of an array of cells.
- * 
+ *
  * The array of cells indicate the (x, y, width, height) data for each cell in the animation.
- * 
+ *
  * @author Niall McGuinness
  * @version 1.0
  * @class AnimatedSpriteArtist
  */
 class AnimatedSpriteArtist extends Artist {
-
     get animationData() {
         return this._animationData;
     }
@@ -71,22 +70,19 @@ class AnimatedSpriteArtist extends Artist {
     }
 
     /**
-     * 
-     * @param {string} takeName 
+     *
+     * @param {string} takeName
      */
     setTake(takeName) {
-
         // If the take exists
         if (this.animationData.takes[takeName]) {
-
             // If the take isn't already our current take
             if (takeName != this.currentTakeName) {
-
                 // Retrieve the take
                 let take = this.animationData.takes[takeName];
 
-                // Update our internal variables based on the values 
-                // contained within 'take'. This allows us to 'play' 
+                // Update our internal variables based on the values
+                // contained within 'take'. This allows us to 'play'
                 // the current take.
 
                 // Essentially, we are just changing the values of
@@ -124,29 +120,24 @@ class AnimatedSpriteArtist extends Artist {
 
         // Otherwise
         else {
-
             // Throw error
             throw takeName + " does not exist!";
         }
     }
 
     getBoundingBoxByTakeName(takeName) {
-
         // If the take exists
         if (this.animationData.takes[takeName]) {
-
             // Return the take's bounding box dimensions
             return this.animationData.takes[takeName].boundingBoxDimensions;
         }
 
         // Otherwise
         else {
-
             // Throw error
             throw takeName + " does not exist!";
         }
     }
-
 
     /**
      * Pauses animation
@@ -154,7 +145,6 @@ class AnimatedSpriteArtist extends Artist {
      * @memberof AnimatedSpriteArtist
      */
     pause() {
-
         this.paused = true;
     }
 
@@ -164,7 +154,6 @@ class AnimatedSpriteArtist extends Artist {
      * @memberof AnimatedSpriteArtist
      */
     unpause() {
-
         this.paused = false;
     }
 
@@ -174,7 +163,6 @@ class AnimatedSpriteArtist extends Artist {
      * @memberof AnimatedSpriteArtist
      */
     reset() {
-
         // Reset variables
         this.paused = false;
         this.currentCellIndex = this.startCellIndex;
@@ -187,11 +175,10 @@ class AnimatedSpriteArtist extends Artist {
      *
      * @param {GameTime} gameTime
      * @param {Sprite} parent Sprite that this Artist is attached to
-     * 
+     *
      * @memberof AnimatedSpriteArtist
      */
     update(gameTime, parent) {
-
         // If paused, exit function
         if (this.paused) return;
 
@@ -202,7 +189,6 @@ class AnimatedSpriteArtist extends Artist {
         // i.e., check if we should move onto the next frame of the animation because
         // enough time has passed between frames
         if (this.timeSinceLastFrameInMs > this.frameIntervalInMs) {
-
             // Advance sprite to the next frame
             this.advance();
 
@@ -217,16 +203,13 @@ class AnimatedSpriteArtist extends Artist {
      * @memberof AnimatedSpriteArtist
      */
     advance() {
-
         // If not at the end frame, then advance frame by 1
         if (this.currentFrameIndex < this.endFrameIndex) {
-
             this.currentFrameIndex++;
         }
 
         // If at the end frame, loop back to the start frame
         else {
-
             this.currentFrameIndex = this.startFrameIndex;
 
             // TO DO: Modify this class to handle 0 loops, N loops, or infinite looping ...
@@ -238,18 +221,16 @@ class AnimatedSpriteArtist extends Artist {
      *
      * @param {GameTime} gameTime (unused)
      * @param {Sprite} parent Sprite that this Artist is attached to
-     * 
+     *
      * @memberof AnimatedSpriteArtist
      */
     draw(gameTime, parent, activeCamera) {
-
         // Save whatever context settings were used before this (color, line, text styles)
         this.context.save();
 
         // If the position of this sprite is not fixed in place
         if (!this.fixedPosition) {
-        
-            // Apply the camera transformations to the scene 
+            // Apply the camera transformations to the scene
             // (i.e. to enable camera zoom, pan, rotate)
             activeCamera.setContext(this.context);
         }
@@ -262,6 +243,16 @@ class AnimatedSpriteArtist extends Artist {
 
         // Retrieve the current animation frame
         let frame = this.frames[this.currentFrameIndex];
+
+        this.context.translate(
+            transform.translation.x + transform.origin.x + frame.width,
+            transform.translation.y + transform.origin.y + frame.height
+        );
+        this.context.rotate(parent.transform.rotationInRadians);
+        this.context.translate(
+            -frame.width - transform.origin.x - transform.translation.x,
+            -frame.height - transform.translation.y - transform.origin.y
+        );
 
         // Draw current animation frame
         this.context.drawImage(
