@@ -4,6 +4,7 @@ const canvas = document.getElementById("main_canvas");
 // Get a handle to our canvas 2D context
 const context = canvas.getContext("2d");
 
+
 /* GAME VARIABLES HERE */
 
 let gameTime;
@@ -180,6 +181,17 @@ function initializeShip() {
     sprite.body.maximumSpeed = 6;
     sprite.body.friction = FrictionType.Low;
     sprite.body.gravity = GravityType.Weak;
+
+    sprite.attachController(
+        new ShipMoveController(
+            notificationCenter,
+            keyboardManager,
+            objectManager,
+            GameData.SHIP_MOVE_KEYS,
+            GameData.SHIP_THRUST_ACCELERATION,
+            GameData.SHIP_TURN_RATE,
+        )
+    )
 
     objectManager.add(sprite);
 
