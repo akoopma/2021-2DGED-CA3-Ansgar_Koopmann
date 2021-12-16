@@ -190,6 +190,7 @@ function initializeShip() {
             GameData.SHIP_MOVE_KEYS,
             GameData.SHIP_THRUST_ACCELERATION,
             GameData.SHIP_TURN_RATE,
+            GameData.SHIP_SPRITE_ROTATION_OFFSET,
         )
     )
 

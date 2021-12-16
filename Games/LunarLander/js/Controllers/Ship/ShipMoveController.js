@@ -5,7 +5,8 @@ class ShipMoveController {
         objectManager,
         moveKeys,
         thrustAcceleration,
-        turnRate
+        turnRate,
+        rotationOffset
    ) {
        this.notificationCenter = notificationCenter;
        this.keyboardManager = keyboardManager;
@@ -14,10 +15,11 @@ class ShipMoveController {
        this.moveKeys = moveKeys;
        this.thrustAcceleration = thrustAcceleration;
        this.turnRate = turnRate;
+       this.rotationOffset = rotationOffset;
    }
 
    update(gameTime, parent) {
-       this.applyForces(gameTime, parent);
+       //this.applyForces(gameTime, parent);
        this.handleInput(gameTime, parent);
        this.applyInput(parent);
 
@@ -29,7 +31,7 @@ class ShipMoveController {
 
    handleInput(gameTime, parent) {
        this.handleTurn(gameTime, parent);
-       //this.handleThrust(gameTime, parent);
+       this.handleThrust(gameTime, parent);
    }
 
    handleTurn(gameTime, parent) {
@@ -43,12 +45,23 @@ class ShipMoveController {
     }
    }
 
+   handleThrust(gameTime, parent) {
+       if (this.keyboardManager.isKeyDown(this.moveKeys[2])) {
+
+           parent.body.turnCounterClockwise(this.rotationOffset);
+           parent.body.addVelocityFacing(this.thrustAcceleration * gameTime.elapsedTimeInMs/1000)
+           parent.body.turnCounterClockwise(-this.rotationOffset)
+       }
+   }
+
    applyInput(parent) {
        parent.transform.setRotationInRadians(Math.atan2(parent.body.facingY, parent.body.facingX));
-       //console.log(parent.body.facingY, parent.body.facingX)
-       console.log(Math.atan2(parent.body.facingY, parent.body.facingX))
-       //parent.transform.translateBy(new Vector2(2, 1))
-
+       parent.transform.translateBy(
+           new Vector2(
+               parent.body.velocityX,
+               parent.body.velocityY
+           )
+       );
 
    }
 
