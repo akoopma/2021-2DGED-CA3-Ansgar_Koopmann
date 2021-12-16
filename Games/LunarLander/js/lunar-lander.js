@@ -6,14 +6,20 @@ const context = canvas.getContext("2d");
 
 /* GAME VARIABLES HERE */
 
+let gameTime;
 let notificationCenter;
 
+let cameraManager;
+let objectManager;
 let menuManager;
 let keyboardManager;
 let mouseManager;
 
+
 // Create a function that will load our game
 function loadGame() {
+    gameTime = new GameTime();
+
     initializeGame();
 
     notificationCenter.notify(
@@ -27,11 +33,45 @@ function loadGame() {
     window.requestAnimationFrame(animate);
 }
 
+// Create a function that will run every time the browser updates
+function animate(now) {
+    // Update game state
+    gameTime.update(now);
+
+    update(gameTime);
+
+    // Re-draw updated game state
+    draw(gameTime);
+
+    // Loop
+    window.requestAnimationFrame(animate);
+}
+
+// Create a function that will update our game
+function update(gameTime) {
+    objectManager.update(gameTime);
+
+}
+
+// Create a function that will re-draw our updated game
+function draw() {
+    clearCanvas();
+
+    objectManager.draw(gameTime);
+
+}
+
+function clearCanvas() {
+    context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+}
+
 // Set up game values
 function initializeGame() {
 
     initializeNotificationCenter();
     initializeManagers();
+    initializeCameras();
+    initializeSprites();
 
 }
 
@@ -40,6 +80,18 @@ function initializeNotificationCenter() {
 }
 
 function initializeManagers() {
+
+    cameraManager = new CameraManager(
+        "Camera Manager"
+    );
+
+    objectManager = new ObjectManager(
+        "Object Manager",
+        notificationCenter,
+        context,
+        StatusType.Drawn | StatusType.Updated,
+        cameraManager
+    );
 
     keyboardManager = new KeyboardManager(
         "Keyboard Manager"
@@ -54,32 +106,83 @@ function initializeManagers() {
         notificationCenter,
         keyboardManager
     );
-}
-
-// Create a function that will run every time the browser updates
-function animate() {
-    // Update game state
-    update();
-
-    // Re-draw updated game state
-    draw();
-
-    // Loop
-    window.requestAnimationFrame(animate);
-}
-
-// Create a function that will update our game
-function update() {
 
 }
 
-// Create a function that will re-draw our updated game
-function draw() {
-    clearCanvas();
+function initializeCameras() {
+    let transform = new Transform2D(
+        Vector2.Zero,
+        0,
+        Vector2.One,
+        new Vector2(
+            canvas.clientWidth / 2,
+            canvas.clientHeight / 2
+        ),
+        new Vector2(
+            canvas.clientWidth,
+            canvas.clientHeight
+        )
+    );
+
+    let camera = new Camera2D(
+        "Camera 1",
+        transform,
+        ActorType.Camera,
+        StatusType.Updated
+    );
+
+    cameraManager.add(camera);
 }
 
-function clearCanvas() {
-    context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+function initializeSprites() {
+
+    initializeShip();
+
+}
+
+function initializeBackground() {
+
+}
+
+function initializeShip() {
+    let transform;
+    let artist;
+    let sprite;
+
+    artist = new AnimatedSpriteArtist(
+        context,
+        1,
+        GameData.SHIP_ANIMATION_DATA
+    );
+
+    artist.setTake("Idle");
+
+    transform = new Transform2D(
+        GameData.SHIP_START_POSITION,
+        0,
+        new Vector2(2, 2),
+        Vector2.Zero,
+        artist.getBoundingBoxByTakeName("Idle"),
+        0
+    );
+
+    sprite = new MoveableSprite(
+        "Ship",
+        transform,
+        ActorType.Player,
+        CollisionType.Collidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,
+        1
+    );
+
+    sprite.body.maximumSpeed = 6;
+    sprite.body.friction = FrictionType.Low;
+    sprite.body.gravity = GravityType.Weak;
+
+    objectManager.add(sprite);
+
 }
 
 let keysDown = {};
