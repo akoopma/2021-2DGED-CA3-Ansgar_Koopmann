@@ -69,6 +69,7 @@ class Body {
         if (velocityX <= this.maximumSpeed) {
 
             this.velocityX = velocityX;
+
         }
     }
 
@@ -107,13 +108,7 @@ class Body {
     }
 
     turnCounterClockwise(radians) {
-        radians =  -1 * radians;
-
-        let newX = Math.cos(radians) * this.facingX - Math.sin(radians) * this.facingY;
-        let newY = Math.sin(radians) * this.facingX + Math.cos(radians) * this.facingY;
-
-        this.facingX = newX;
-        this.facingY = newY;
+        this.turnClockwise( -1 * radians);
     }
 
     turnClockwise(radians) {
