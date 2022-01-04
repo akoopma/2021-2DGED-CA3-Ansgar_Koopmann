@@ -49,8 +49,12 @@ class ShipMoveController {
        if (this.keyboardManager.isKeyDown(this.moveKeys[2])) {
 
            parent.body.turnCounterClockwise(this.rotationOffset);
-           parent.body.addVelocityFacing(this.thrustAcceleration * gameTime.elapsedTimeInMs/1000)
+           parent.body.addVelocityFacing(this.thrustAcceleration * gameTime.elapsedTimeInMs/1000)   
            parent.body.turnCounterClockwise(-this.rotationOffset)
+
+           parent.artist.setTake("Thrust");
+       } else {
+           parent.artist.setTake("Idle");
        }
    }
 

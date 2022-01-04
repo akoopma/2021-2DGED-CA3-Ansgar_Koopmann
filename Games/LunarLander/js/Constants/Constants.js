@@ -23,19 +23,43 @@ class GameData {
                 startFrameIndex: 0,
                 endFrameIndex: 9,
 
-                boundingBoxDimensions: new Vector2(15, 24),
+                boundingBoxDimensions: new Vector2(15, 18),
 
                 frames: [
-                    new Rect(0, 0, 15, 24),
-                    new Rect(0, 24, 15, 24),
-                    new Rect(16, 0, 15, 24),
-                    new Rect(16, 24, 15, 24),
-                    new Rect(32, 0, 15, 24),
-                    new Rect(32, 24, 15, 24),
-                    new Rect(48, 0, 15, 24),
-                    new Rect(48, 24, 15, 24),
-                    new Rect(64, 0, 15, 24),
-                    new Rect(64, 24, 15, 24),
+                    new Rect(0, 0, 15, 23),
+                    new Rect(0, 24, 15, 23),
+                    new Rect(16, 0, 15, 23),
+                    new Rect(16, 24, 15, 23),
+                    new Rect(32, 0, 15, 23),
+                    new Rect(32, 24, 15, 23),
+                    new Rect(48, 0, 15, 23),
+                    new Rect(48, 24, 15, 23),
+                    new Rect(64, 0, 15, 23),
+                    new Rect(64, 24, 15, 23),
+                ]
+            },
+
+            "Thrust": {
+                frameRatePerSec: 4,
+
+                maxLoopCount: -1,
+
+                startFrameIndex: 0,
+                endFrameIndex: 9,
+
+                boundingBoxDimensions: new Vector2(15, 18),
+
+                frames: [
+                    new Rect(0, 48, 15, 24),
+                    new Rect(0, 72, 15, 24),
+                    new Rect(16, 48, 15, 24),
+                    new Rect(16, 72, 15, 24),
+                    new Rect(32, 48, 15, 24),
+                    new Rect(32, 72, 15, 24),
+                    new Rect(48, 48, 15, 24),
+                    new Rect(48, 72, 15, 24),
+                    new Rect(64, 48, 15, 24),
+                    new Rect(64, 72, 15, 24),
                 ]
             }
         }
