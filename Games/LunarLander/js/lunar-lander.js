@@ -142,7 +142,7 @@ function initializeSprites() {
 }
 
 function initializeBackground() {
-
+    
 }
 
 function initializeShip() {
@@ -161,7 +161,7 @@ function initializeShip() {
     transform = new Transform2D(
         GameData.SHIP_START_POSITION,
         0,
-        new Vector2(2, 2),
+        new Vector2(1.5, 1.5),
         Vector2.Zero,
         artist.getBoundingBoxByTakeName("Idle"),
         0

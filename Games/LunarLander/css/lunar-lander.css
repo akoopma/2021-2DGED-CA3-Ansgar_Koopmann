@@ -12,10 +12,10 @@
     src: URL('../assets/Fonts/Bohemian_Typewriter_Regular/Bohemian\ Typewriter.ttf') format('truetype');
   }
 
-  @font-face {
-    font-family: 'nixie-one';
-    src: URL('../assets/Fonts/Nixie_One/NixieOne.ttf') format('truetype');
-  }
+@font-face {
+  font-family: 'nixie-one';
+  src: URL('../assets/Fonts/Nixie_One/NixieOne.ttf') format('truetype');
+}
 
 body {
   cursor: default;
@@ -45,8 +45,8 @@ body {
 
 #game_window {
   position: relative;
-  width: 850;
-  height: 468;
+  width: 1600px;
+  height: 700px;
   margin: 0 auto;
 
   background-color: #000000;
@@ -55,8 +55,8 @@ body {
 
 #menu_block {
   position: absolute;
-  width: 850;
-  height: 468;
+  width: 1600px;
+  height: 700px;
   left: 0;
   top: 0;
 
@@ -71,8 +71,8 @@ body {
   flex-direction: column;
   justify-content: center;
 
-  width: 850;
-  height: 468;
+  width: 1600px;
+  height: 700px;
   left: 0;
   top: 0;
 }
