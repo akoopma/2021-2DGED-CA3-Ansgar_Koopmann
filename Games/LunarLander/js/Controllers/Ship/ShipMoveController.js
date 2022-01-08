@@ -52,9 +52,13 @@ class ShipMoveController {
            parent.body.addVelocityFacing(this.thrustAcceleration * gameTime.elapsedTimeInMs/1000)   
            parent.body.turnCounterClockwise(-this.rotationOffset)
 
+           const frameIndex = parent.artist.currentFrameIndex;
            parent.artist.setTake("Thrust");
+           parent.artist.currentFrameIndex = frameIndex;
        } else {
+           const frameIndex = parent.artist.currentFrameIndex;
            parent.artist.setTake("Idle");
+           parent.artist.currentFrameIndex = frameIndex;
        }
    }
 
