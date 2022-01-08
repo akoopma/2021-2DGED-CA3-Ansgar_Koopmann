@@ -121,8 +121,16 @@ class TextSpriteArtist extends Artist {
 
   clone() {
 
-    // TO DO ... 
-    throw "Not Yet Implemented";
+    return new TextSpriteArtist(
+      this.context,
+      this._alpha,
+      this.text,
+      this.fontType,
+      this.fillStyle,
+      this.textAlign,
+      this.maxWidth,
+      this.fixedPosition
+    );
 
   }
 }
