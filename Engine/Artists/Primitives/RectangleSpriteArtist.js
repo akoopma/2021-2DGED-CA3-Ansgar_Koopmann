@@ -96,6 +96,16 @@ class RectangleSpriteArtist extends Artist {
         this.context.strokeStyle = this.strokeStyle;
         this.context.fillStyle = this.fillStyle;
 
+        this.context.translate(
+            transform.translation.x + transform.origin.x,
+            transform.translation.y + transform.origin.y
+        );
+        this.context.rotate(parent.transform.rotationInRadians);
+        this.context.translate(
+            - transform.origin.x - transform.translation.x,
+            - transform.translation.y - transform.origin.y
+        );
+
         this.context.strokeRect(
             transform.translation.x,
             transform.translation.y,
