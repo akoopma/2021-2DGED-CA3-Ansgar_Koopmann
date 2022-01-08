@@ -137,13 +137,145 @@ function initializeCameras() {
 
 function initializeSprites() {
 
+    initializeBackground();
+    initializeLandingSpots();
+    initializeLandingText();
     initializeShip();
 
 }
 
 function initializeBackground() {
-    
-}
+    let transform;
+    let artist;
+    let spriteArchetype;
+
+
+    artist = new RectangleSpriteArtist(
+        context,
+        1,
+        GameData.TERRAIN_DATA.lineWidth,
+        GameData.TERRAIN_DATA.strokeStyle,
+        0,
+        true
+    )
+
+    transform = new Transform2D(
+        Vector2.Zero,
+        0,
+        Vector2.Zero,
+        Vector2.Zero,
+        Vector2.Zero,
+        0
+    );
+
+    spriteArchetype = new Sprite(
+        GameData.TERRAIN_DATA.id,
+        transform,
+        GameData.TERRAIN_DATA.actorType,
+        GameData.TERRAIN_DATA.collisionType,
+        GameData.TERRAIN_DATA.statusType,
+        artist,
+        GameData.TERRAIN_DATA.scrollSpeedMultiplier,
+        GameData.TERRAIN_DATA.layerDepth
+    );
+
+    for (let i = 0; i < GameData.TERRAIN_DATA.transformArray.length; i++) {
+        spriteClone = spriteArchetype.clone();
+        spriteClone.id = spriteClone.id + i;
+        spriteClone.transform = GameData.TERRAIN_DATA.transformArray[i];
+        objectManager.add(spriteClone);
+    }
+};
+
+function initializeLandingSpots() {
+    let transform;
+    let artist;
+    let spriteArchetype;
+
+
+    artist = new RectangleSpriteArtist(
+        context,
+        1,
+        GameData.LANDING_DATA.lineWidth,
+        GameData.LANDING_DATA.strokeStyle,
+        0,
+        true
+    );
+
+    transform = new Transform2D(
+        Vector2.Zero,
+        0,
+        Vector2.Zero,
+        Vector2.Zero,
+        Vector2.Zero,
+        0
+    );
+
+    spriteArchetype = new Sprite(
+        GameData.LANDING_DATA.id,
+        transform,
+        GameData.LANDING_DATA.actorType,
+        GameData.LANDING_DATA.collisionType,
+        GameData.LANDING_DATA.statusType,
+        artist,
+        GameData.LANDING_DATA.scrollSpeedMultiplier,
+        GameData.LANDING_DATA.layerDepth
+    );
+
+    for (let i = 0; i < GameData.LANDING_DATA.transformArray.length; i++) {
+        spriteClone = spriteArchetype.clone();
+        spriteClone.id = spriteClone.id + i;
+        spriteClone.transform = GameData.LANDING_DATA.transformArray[i];
+        objectManager.add(spriteClone);
+    }
+};
+
+function initializeLandingText() {
+    let transform;
+    let artist;
+    let spriteArchetype;
+
+
+    artist = new TextSpriteArtist(
+        context, 
+        1,
+        "",
+        "Arial",
+        Color.White,
+        "Center",
+        20,
+        0
+    );
+
+    transform = new Transform2D(
+        Vector2.Zero,
+        0,
+        Vector2.Zero,
+        Vector2.Zero,
+        Vector2.Zero,
+        0
+    );
+
+    spriteArchetype = new Sprite(
+        "LandingText",
+        transform,
+        ActorType.Background,
+        CollisionType.NotCollidable,
+        StatusType.Drawn,
+        artist,
+        GameData.LANDING_DATA.scrollSpeedMultiplier,
+        GameData.LANDING_DATA.layerDepth
+    );
+
+    for (let i = 0; i < GameData.LANDING_DATA.multipliers.length; i++) {
+        artist.text = "X" + GameData.LANDING_DATA.multipliers[i];
+        spriteClone = spriteArchetype.clone();
+        spriteClone.id = spriteClone.id + i;
+        spriteClone.transform = GameData.LANDING_DATA.transformArray[i].clone();
+        spriteClone.transform.translateBy(new Vector2(20, -15))
+        objectManager.add(spriteClone);
+    }
+};
 
 function initializeShip() {
     let transform;
