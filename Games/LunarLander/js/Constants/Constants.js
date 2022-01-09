@@ -12,12 +12,12 @@ class GameData {
         layerDepth: 0,
 
         transformArray: [
-            GameData.generateTransform(new Vector2(0, 500), new Vector2(20, 450)),
-            GameData.generateTransform(new Vector2(20, 450), new Vector2(30, 410)),
-            GameData.generateTransform(new Vector2(30, 410), new Vector2(50, 400)),
-            GameData.generateTransform(new Vector2(50, 400), new Vector2(75, 360)),
+            GameData.generateTransform(new Vector2(0, 600), new Vector2(20, 550)),
+            GameData.generateTransform(new Vector2(20, 550), new Vector2(30, 510)),
+            GameData.generateTransform(new Vector2(30, 510), new Vector2(50, 500)),
+            GameData.generateTransform(new Vector2(50, 500), new Vector2(75, 460)),
             // Landing Sport
-            GameData.generateTransform(new Vector2(125, 360), new Vector2(145, 310)),
+            GameData.generateTransform(new Vector2(105, 460), new Vector2(125, 410)),
             
             
         ],
@@ -36,7 +36,7 @@ class GameData {
         transform: Transform2D,
 
         transformArray: [
-            GameData.generateTransform(new Vector2(75, 360), new Vector2(125, 360)),
+            GameData.generateTransform(new Vector2(75, 460), new Vector2(105, 460)),
         ],
 
         multipliers: [
@@ -55,16 +55,18 @@ class GameData {
     }
 
     static SHIP_START_POSITION = new Vector2(20,20);
-    static SHIP_START_VELOCITY = new Vector2(0,0);
+    static SHIP_START_VELOCITY = new Vector2(0.25,0);
     static SHIP_START_FACING = new Vector2(1, 0);
     static SHIP_START_FUEL = 1000;
-    static SHIP_FUEL_CONSUMPTION = 50;
+    static SHIP_FUEL_CONSUMPTION = 25;
     static SHIP_MOVE_KEYS = [Keys.A, Keys.D, Keys.W];
     static SHIP_TURN_RATE = Math.PI;
-    static SHIP_THRUST_ACCELERATION = 0.25;
+    static SHIP_THRUST_ACCELERATION = 0.1;
     static SHIP_SPRITE_ROTATION_OFFSET = Math.PI/2;
-    static SHIP_SAFE_LAND_VELOCITY = 0.4;
-    static SHIP_SAFE_LAND_X_Rotation = 0.9;
+    static SHIP_PERCECT_LAND_VELOCITY = 0.1
+    static SHIP_PERFECT_LAND_X_ROTATION = 0.99;
+    static SHIP_SAFE_LAND_VELOCITY = 0.2;
+    static SHIP_SAFE_LAND_X_ROTATION = 0.95;
 
     static SHIP_ANIMATION_DATA = {
 

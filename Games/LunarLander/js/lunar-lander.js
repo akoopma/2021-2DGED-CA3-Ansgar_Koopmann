@@ -120,8 +120,10 @@ function initializeManagers() {
         "Game State Manager",
         notificationCenter,
         GameData.SHIP_START_FUEL,
+        GameData.SHIP_PERCECT_LAND_VELOCITY,
+        GameData.SHIP_PERFECT_LAND_X_ROTATION,
         GameData.SHIP_SAFE_LAND_VELOCITY,
-        GameData.SHIP_SAFE_LAND_X_Rotation
+        GameData.SHIP_SAFE_LAND_X_ROTATION
     );
 
     uiManager = new MyUIManager(
@@ -296,7 +298,7 @@ function initializeLandingText() {
         spriteClone = spriteArchetype.clone();
         spriteClone.id = spriteClone.id + i;
         spriteClone.transform = GameData.LANDING_DATA.transformArray[i].clone();
-        spriteClone.transform.translateBy(new Vector2(20, -15))
+        spriteClone.transform.translateBy(new Vector2(10, -15))
         objectManager.add(spriteClone);
     }
 };
@@ -317,7 +319,7 @@ function initializeShip() {
     transform = new Transform2D(
         GameData.SHIP_START_POSITION,
         0,
-        new Vector2(1.2, 1.2),
+        new Vector2(1, 1),
         Vector2.Zero,
         artist.getBoundingBoxByTakeName("Idle"),
         0
@@ -335,6 +337,8 @@ function initializeShip() {
     );
 
     sprite.body.maximumSpeed = 6;
+    sprite.body.velocityX = GameData.SHIP_START_VELOCITY.x;
+    sprite.body.velocityY = GameData.SHIP_START_VELOCITY.y;
     sprite.body.friction = FrictionType.Low;
     sprite.body.gravity = GravityType.Moon;
 
