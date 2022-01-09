@@ -32,6 +32,14 @@ class MyMenuManager extends MenuManager {
                 this.showMenu(notification.notificationArguments[0]);
                 break;
 
+            case NotificationAction.Crash: 
+                this.handleCrash();
+                break;
+
+            case NotificationAction.Land:
+                this.handleLand();
+                break;
+
             default:
                 break;
         }
@@ -80,6 +88,10 @@ class MyMenuManager extends MenuManager {
         // Hide the exit menu
         $('#exit_menu').hide();
         $('#exit_menu').addClass('hidden');
+        $('#land_menu').hide();
+        $('#land_menu').addClass('hidden');
+        $('#crash_menu').hide();
+        $('#crash_menu').addClass('hidden');
 
 
         // Hide the YOUR_MENU menu
@@ -122,6 +134,32 @@ class MyMenuManager extends MenuManager {
             $('#exit_menu').removeClass('hidden');
         });
 
+        $('.continue').click(function () {
+
+            $('#crash_menu').hide();
+            $('#crash_menu').addClass('hidden');
+
+            $('#land_menu').hide();
+            $('#land_menu').addClass('hidden');
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Reset
+                )
+            )
+        });
+
+    }
+
+    handleCrash() {
+        $('#crash_menu').show();
+        $('#crash_menu').removeClass('hidden');
+    }
+
+    handleLand() {
+        $('#land_menu').show();
+        $('#land_menu').removeClass('hidden');
     }
 
     update(gameTime) {

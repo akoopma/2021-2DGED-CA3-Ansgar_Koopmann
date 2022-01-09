@@ -32,6 +32,12 @@ function loadGame() {
             [StatusType.Off]
         )
     );
+    notificationCenter.notify(
+        new Notification(
+            NotificationType.GameState,
+            NotificationAction.Play
+        )
+    )
 
     window.requestAnimationFrame(animate);
 }
@@ -113,7 +119,9 @@ function initializeManagers() {
     gameStateManager = new MyGameStateManager(
         "Game State Manager",
         notificationCenter,
-        GameData.SHIP_START_FUEL
+        GameData.SHIP_START_FUEL,
+        GameData.SHIP_SAFE_LAND_VELOCITY,
+        GameData.SHIP_SAFE_LAND_X_Rotation
     );
 
     uiManager = new MyUIManager(
@@ -349,6 +357,7 @@ function initializeShip() {
 function initializeHUD() {
 
     initializeFuel();
+    initializeScore();
 };
 
 function initializeFuel() {
@@ -381,6 +390,48 @@ function initializeFuel() {
 
     sprite = new Sprite(
         "Text UI Fuel",
+        transform,
+        ActorType.HUD,
+        CollisionType.NotCollidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,
+        1
+    );
+
+    objectManager.add(sprite);
+};
+
+function initializeScore() {
+
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D(
+        new Vector2(
+            canvas.clientWidth - 120,
+            45
+        ),
+        0,
+        Vector2.One,
+        Vector2.Zero,
+        new Vector2(20, 10)
+    );
+
+    artist = new TextSpriteArtist(
+        context,
+        1,
+        'Score: ' + 0,
+        FontType.InformationMedium,
+        Color.White,
+        TextAlignType.Left,
+        200,
+        false
+    );
+
+    sprite = new Sprite(
+        "Text UI Score",
         transform,
         ActorType.HUD,
         CollisionType.NotCollidable,

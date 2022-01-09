@@ -5,7 +5,7 @@ class GameData {
         id: "Terrain",
         lineWidth: 1,
         strokeStyle: Color.White,
-        actorType: ActorType.Background,
+        actorType: ActorType.Ground,
         collisionType: CollisionType.Collidable,
         statusType: StatusType.Drawn,
         scrollSpeedMultiplier: 0,
@@ -32,6 +32,8 @@ class GameData {
         statusType: StatusType.Drawn,
         scrollSpeedMultiplier: 0,
         layerDepth: 0,
+        multiplier: Number,
+        transform: Transform2D,
 
         transformArray: [
             GameData.generateTransform(new Vector2(75, 360), new Vector2(125, 360)),
@@ -59,8 +61,10 @@ class GameData {
     static SHIP_FUEL_CONSUMPTION = 50;
     static SHIP_MOVE_KEYS = [Keys.A, Keys.D, Keys.W];
     static SHIP_TURN_RATE = Math.PI;
-    static SHIP_THRUST_ACCELERATION = 0.5;
+    static SHIP_THRUST_ACCELERATION = 0.25;
     static SHIP_SPRITE_ROTATION_OFFSET = Math.PI/2;
+    static SHIP_SAFE_LAND_VELOCITY = 0.4;
+    static SHIP_SAFE_LAND_X_Rotation = 0.9;
 
     static SHIP_ANIMATION_DATA = {
 

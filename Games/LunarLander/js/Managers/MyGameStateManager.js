@@ -1,4 +1,9 @@
+const GameStates = {
+    Play: "Play",
+    Pause: "Pause",
+}
 class MyGameStateManager extends GameStateManager {
+
     get shipFuel() {
         return this._shipFuel;
     }
@@ -15,13 +20,16 @@ class MyGameStateManager extends GameStateManager {
         this._playerScore = value;
     }
 
-    constructor(id, notificationCenter, initialShipFuel) {
+    constructor(id, notificationCenter, initialShipFuel, landingSpeed, landingRotation) {
         super(id);
 
         this.notificationCenter = notificationCenter;
 
         this.shipFuel = initialShipFuel;
+        this.landingSpeed = landingSpeed;
+        this.landingRotation = landingRotation;
         this.playerScore = 0;
+        this.gameState = GameStates.Pause;
 
         this.registerForNotifications();
     }
@@ -41,8 +49,25 @@ class MyGameStateManager extends GameStateManager {
                 break;
 
             case NotificationAction.Land:
-                this.handleWin(notification.notificationArguments);
+                this.handleLand(notification.notificationArguments);
                 break;
+
+            case NotificationAction.Crash:
+                this.handleCrash();
+                break;
+
+            case NotificationAction.Play:
+                this.gameState = GameStates.Play;
+                break;
+
+            case NotificationAction.Pause:
+                this.gameState = GameStates.Pause;
+                break;
+
+            case NotificationAction.Reset: {
+                this.handleReset();
+                break;
+            }
 
             default:
                 break;
@@ -60,9 +85,95 @@ class MyGameStateManager extends GameStateManager {
         );
     }
 
-    handleLand(argArray) {}
+    handleLand(argArray) {
+        let body = argArray[0];
+        let multiplier = argArray[1];
+
+        console.log(body.facingX);
+        console.log(body.velocityY);
+
+        if (body.velocityY > this.landingSpeed
+            || body.facingX < this.landingRotation) {
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Crash
+                )
+            )
+        } else {
+
+            this._playerScore += 100 * multiplier;
+
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Pause
+                )
+            );
+
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.UI,
+                    NotificationAction.Land,
+                    [this.playerScore]
+                )
+            )
+            
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.Menu,
+                    NotificationAction.Land,
+                    [100*multiplier]
+                )
+            )
+        }
+    }
+
+    handleCrash() {
+        this._shipFuel -= 100;
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.GameState,
+                NotificationAction.Pause
+            )
+        );
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.UI,
+                NotificationAction.UpdateFuel,
+                [this.shipFuel]
+            )
+        );
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.Menu,
+                NotificationAction.Crash
+            )
+        )
+    }
+
+    handleReset() {
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.Sprite,
+                NotificationAction.RemoveAllByType,
+                [ActorType.Player]
+            )
+        );
+        initializeShip();
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.GameState,
+                NotificationAction.Play
+            )
+        );
+    }
 
     update(gameTime) {
-        
+
     }
 }

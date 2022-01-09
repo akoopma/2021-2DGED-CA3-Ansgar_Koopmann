@@ -51,6 +51,8 @@ const NotificationAction = {
     Fire: "Fire",
     Win: "Win",
     Lose: "Lose",
+    Land: "Land",
+    Crash: "Crash",
 
     Add: "Add",
     Remove: "Remove",
@@ -63,6 +65,7 @@ const NotificationAction = {
 
     Play: "Play",
     Pause: "Pause",
+    Reset: "Reset",
     ShowMenuChanged: "ShowMenuChanged",
     SetVolume: "SetVolume",
     SetVolumeByTheme: "SetVolumeByTheme",
