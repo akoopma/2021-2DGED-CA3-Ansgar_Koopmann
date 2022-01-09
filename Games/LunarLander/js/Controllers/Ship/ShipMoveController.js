@@ -3,24 +3,29 @@ class ShipMoveController {
         notificationCenter,
         keyboardManager,
         objectManager,
+        gameStateManager,
         moveKeys,
         thrustAcceleration,
         turnRate,
+        fuelConsumption,
         rotationOffset
    ) {
        this.notificationCenter = notificationCenter;
        this.keyboardManager = keyboardManager;
        this.objectManager = objectManager;
+       this.gameStateManager = gameStateManager
 
        this.moveKeys = moveKeys;
        this.thrustAcceleration = thrustAcceleration;
        this.turnRate = turnRate;
+       this.fuelConsumption = fuelConsumption;
        this.rotationOffset = rotationOffset;
    }
 
    update(gameTime, parent) {
-       //this.applyForces(gameTime, parent);
+       this.applyForces(gameTime, parent);
        this.handleInput(gameTime, parent);
+       this.checkCollisions(parent);
        this.applyInput(parent);
 
    }
@@ -35,18 +40,29 @@ class ShipMoveController {
    }
 
    handleTurn(gameTime, parent) {
-       if (this.keyboardManager.isKeyDown(this.moveKeys[0])) {
+       if (this.keyboardManager.isKeyDown(this.moveKeys[0]) 
+       && parent.body.facingX >= 0.1
+       && !parent.body.onGround) {
            parent.body.turnCounterClockwise(this.turnRate * gameTime.elapsedTimeInMs/1000);
+           if (parent.body.facingX < 0.1) {
+               parent.body.facingX = 0.1;
+           }
 
        }
-       if (this.keyboardManager.isKeyDown(this.moveKeys[1])) {
-        parent.body.turnClockwise(this.turnRate * gameTime.elapsedTimeInMs/1000);
-
+       if (this.keyboardManager.isKeyDown(this.moveKeys[1])
+       && parent.body.facingX >= 0.1
+       && !parent.body.onGround) {
+            parent.body.turnClockwise(this.turnRate * gameTime.elapsedTimeInMs/1000);
+            if (parent.body.facingX < 0.1) {
+                parent.body.facingX = 0.1;
+            }
     }
    }
 
    handleThrust(gameTime, parent) {
-       if (this.keyboardManager.isKeyDown(this.moveKeys[2])) {
+       if (this.keyboardManager.isKeyDown(this.moveKeys[2]) 
+       && !parent.body.onGround 
+       && this.gameStateManager.shipFuel > 0) {
 
            parent.body.turnCounterClockwise(this.rotationOffset);
            parent.body.addVelocityFacing(this.thrustAcceleration * gameTime.elapsedTimeInMs/1000)   
@@ -55,10 +71,42 @@ class ShipMoveController {
            const frameIndex = parent.artist.currentFrameIndex;
            parent.artist.setTake("Thrust");
            parent.artist.currentFrameIndex = frameIndex;
+
+           this.notificationCenter.notify(
+               new Notification(
+                   NotificationType.GameState,
+                   NotificationAction.UpdateFuel,
+                   [-this.fuelConsumption * gameTime.elapsedTimeInMs/1000]
+               )
+           );
        } else {
            const frameIndex = parent.artist.currentFrameIndex;
            parent.artist.setTake("Idle");
            parent.artist.currentFrameIndex = frameIndex;
+       }
+   }
+
+   checkCollisions(parent) {
+
+       this.handleLandingCollision(parent);
+   }
+
+   handleLandingCollision(parent) {
+       const landingSpots = this.objectManager.get(ActorType.Platform);
+
+       for (let i = 0; i < landingSpots.length; i++) {
+           const landingSpot = landingSpots[i];
+
+           let collisionType = Collision.GetCollisionLocationType(parent, landingSpot);
+
+           if (collisionType === CollisionLocationType.Bottom) {
+               parent.body.setVelocityY(0);
+               parent.body.setVelocityX(0);
+               parent.body.onGround = true;
+           }
+
+
+
        }
    }
 

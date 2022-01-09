@@ -71,6 +71,8 @@ const NotificationAction = {
     
     UpdateHealthBar: "UpdateHealthBar",
 
+    UpdateFuel: "UpdateFuel",
+
     // Add more here as required
 };
 

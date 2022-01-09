@@ -15,6 +15,8 @@ let objectManager;
 let menuManager;
 let keyboardManager;
 let mouseManager;
+let gameStateManager;
+let uiManager;
 
 
 // Create a function that will load our game
@@ -108,6 +110,19 @@ function initializeManagers() {
         keyboardManager
     );
 
+    gameStateManager = new MyGameStateManager(
+        "Game State Manager",
+        notificationCenter,
+        GameData.SHIP_START_FUEL
+    );
+
+    uiManager = new MyUIManager(
+        "UI Manager",
+        notificationCenter,
+        objectManager,
+        mouseManager
+    );
+
 }
 
 function initializeCameras() {
@@ -142,6 +157,7 @@ function initializeSprites() {
     initializeLandingText();
     initializeShip();
 
+    initializeHUD();
 }
 
 function initializeBackground() {
@@ -312,23 +328,70 @@ function initializeShip() {
 
     sprite.body.maximumSpeed = 6;
     sprite.body.friction = FrictionType.Low;
-    sprite.body.gravity = GravityType.Weak;
+    sprite.body.gravity = GravityType.Moon;
 
     sprite.attachController(
         new ShipMoveController(
             notificationCenter,
             keyboardManager,
             objectManager,
+            gameStateManager,
             GameData.SHIP_MOVE_KEYS,
             GameData.SHIP_THRUST_ACCELERATION,
             GameData.SHIP_TURN_RATE,
+            GameData.SHIP_FUEL_CONSUMPTION,
             GameData.SHIP_SPRITE_ROTATION_OFFSET,
         )
     )
+    objectManager.add(sprite);
+};
+
+function initializeHUD() {
+
+    initializeFuel();
+};
+
+function initializeFuel() {
+
+    let transform;
+    let artist;
+    let sprite;
+
+    transform = new Transform2D(
+        new Vector2(
+            canvas.clientWidth - 120,
+            20
+        ),
+        0,
+        Vector2.One,
+        Vector2.Zero,
+        new Vector2(20, 10)
+    );
+
+    artist = new TextSpriteArtist(
+        context,
+        1,
+        'Fuel: ' + GameData.SHIP_START_FUEL,
+        FontType.InformationMedium,
+        Color.White,
+        TextAlignType.Left,
+        200,
+        false
+    );
+
+    sprite = new Sprite(
+        "Text UI Fuel",
+        transform,
+        ActorType.HUD,
+        CollisionType.NotCollidable,
+        StatusType.Updated | StatusType.Drawn,
+        artist,
+        1,
+        1
+    );
 
     objectManager.add(sprite);
-
-}
+};
 
 let keysDown = {};
 
