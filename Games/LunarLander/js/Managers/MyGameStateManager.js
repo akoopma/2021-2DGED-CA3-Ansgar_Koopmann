@@ -20,15 +20,17 @@ class MyGameStateManager extends GameStateManager {
         this._playerScore = value;
     }
 
-    constructor(id, notificationCenter, initialShipFuel, landingSpeed, landingRotation) {
+    constructor(id, notificationCenter, initialShipFuel, perfectLandingSpeed, perfectLandingRotation, safeLandingSpeed, safeLandingRotation) {
         super(id);
 
         this.notificationCenter = notificationCenter;
 
         this.shipFuel = initialShipFuel;
-        this.landingSpeed = landingSpeed;
-        this.landingRotation = landingRotation;
         this.playerScore = 0;
+        this.safeLandingSpeed = safeLandingSpeed;
+        this.safeLandingRotation = safeLandingRotation;
+        this.perfectLandingSpeed = perfectLandingSpeed;
+        this.perfectLandingRotation = perfectLandingRotation;
         this.gameState = GameStates.Pause;
 
         this.registerForNotifications();
@@ -92,8 +94,8 @@ class MyGameStateManager extends GameStateManager {
         console.log(body.facingX);
         console.log(body.velocityY);
 
-        if (body.velocityY > this.landingSpeed
-            || body.facingX < this.landingRotation) {
+        if (body.velocityY > this.safeLandingSpeed
+            || body.facingX < this.safeLandingRotation) {
             this.notificationCenter.notify(
                 new Notification(
                     NotificationType.GameState,
@@ -101,8 +103,23 @@ class MyGameStateManager extends GameStateManager {
                 )
             )
         } else {
+            let landingScore = 100 * multiplier / 2;
+            let perfectLanding = false;
 
-            this._playerScore += 100 * multiplier;
+            if (body.velocityY < this.perfectLandingSpeed
+                && body.facingX > this.perfectLandingRotation) {
+                    landingScore = 100 * multiplier;
+                    perfectLanding = true;
+
+                    this.notificationCenter.notify(
+                        new Notification(
+                            NotificationType.GameState,
+                            NotificationAction.UpdateFuel,
+                            [50]
+                        )
+                    );
+            }
+            this._playerScore += landingScore;
 
             this.notificationCenter.notify(
                 new Notification(
@@ -123,7 +140,8 @@ class MyGameStateManager extends GameStateManager {
                 new Notification(
                     NotificationType.Menu,
                     NotificationAction.Land,
-                    [100*multiplier]
+                    [landingScore, 
+                    perfectLanding]
                 )
             )
         }

@@ -37,7 +37,7 @@ class MyMenuManager extends MenuManager {
                 break;
 
             case NotificationAction.Land:
-                this.handleLand();
+                this.handleLand(notification.notificationArguments);
                 break;
 
             default:
@@ -136,6 +136,8 @@ class MyMenuManager extends MenuManager {
 
         $('.continue').click(function () {
 
+            $('#temp').remove();
+
             $('#crash_menu').hide();
             $('#crash_menu').addClass('hidden');
 
@@ -157,7 +159,18 @@ class MyMenuManager extends MenuManager {
         $('#crash_menu').removeClass('hidden');
     }
 
-    handleLand() {
+    handleLand(argArray) {
+
+        let landingScore = argArray[0];
+        let perfectLanding = argArray[1];
+
+        if (perfectLanding) {
+            land_menu_text.innerText = "Perfect landing. Gained " + landingScore + " points";
+            $("#land_menu").append("<h1 id='temp'>50 Fuel restored</h1>");
+        } else {
+            land_menu_text.innerText = "Safe Landing gained " + landingScore + " points";
+        }
+
         $('#land_menu').show();
         $('#land_menu').removeClass('hidden');
     }
