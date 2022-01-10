@@ -245,13 +245,13 @@ class AnimatedSpriteArtist extends Artist {
         let frame = this.frames[this.currentFrameIndex];
 
         this.context.translate(
-            transform.translation.x + transform.origin.x + frame.width,
-            transform.translation.y + transform.origin.y + frame.height
+            transform.translation.x + transform.origin.x + frame.width/2,
+            transform.translation.y + transform.origin.y + frame.height/2
         );
         this.context.rotate(parent.transform.rotationInRadians);
         this.context.translate(
-            -frame.width - transform.origin.x - transform.translation.x,
-            -frame.height - transform.translation.y - transform.origin.y
+            -frame.width/2 - transform.origin.x - transform.translation.x,
+            -frame.height/2 - transform.translation.y - transform.origin.y
         );
 
         // Draw current animation frame
