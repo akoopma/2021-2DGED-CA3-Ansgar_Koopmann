@@ -28,6 +28,7 @@ class DiagonalCollision {
         return doIntersect(spriteALowerBoundingLineStart, spriteALowerBoundingLineEnd, spriteBStart, spriteBEnd);
 
 
+        // Code from https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ contributed by avanitrachhadiya2155 
         // Given three collinear points p, q, r, the function checks if
         // point q lies on line segment 'pr'
         function onSegment(p, q, r)
@@ -39,6 +40,7 @@ class DiagonalCollision {
             return false;
         }
 
+        // Code from https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ contributed by avanitrachhadiya2155 
         // To find orientation of ordered triplet (p, q, r).
         // The function returns following values
         // 0 --> p, q and r are collinear
@@ -57,6 +59,7 @@ class DiagonalCollision {
             return (val > 0)? 1: 2; // clock or counterclock wise
         }
 
+        // Code from https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/ contributed by avanitrachhadiya2155 
         // The main function that returns true if line segment 'p1q1'
         // and 'p2q2' intersect.
         function doIntersect(p1, q1, p2, q2)
