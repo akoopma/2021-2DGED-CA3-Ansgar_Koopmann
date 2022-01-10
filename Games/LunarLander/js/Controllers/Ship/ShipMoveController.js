@@ -42,28 +42,22 @@ class ShipMoveController {
 
     handleTurn(gameTime, parent) {
         if (
-            this.keyboardManager.isKeyDown(this.moveKeys[0]) &&
-            parent.body.facingX >= 0.1 &&
-            !parent.body.onGround
+            this.keyboardManager.isKeyDown(this.moveKeys[0]) 
+            && (parent.body.facingY > -1 && parent.body.facingX > 0 || parent.body.facingY > 0 ) 
+            && !parent.body.onGround
         ) {
             parent.body.turnCounterClockwise(
                 (this.turnRate * gameTime.elapsedTimeInMs) / 1000
             );
-            if (parent.body.facingX < 0.1) {
-                parent.body.facingX = 0.1;
-            }
         }
         if (
-            this.keyboardManager.isKeyDown(this.moveKeys[1]) &&
-            parent.body.facingX >= 0.1 &&
-            !parent.body.onGround
+            this.keyboardManager.isKeyDown(this.moveKeys[1]) 
+            && (parent.body.facingY < 1 && parent.body.facingX > 0 || parent.body.facingY < 0) 
+            && !parent.body.onGround
         ) {
             parent.body.turnClockwise(
                 (this.turnRate * gameTime.elapsedTimeInMs) / 1000
             );
-            if (parent.body.facingX < 0.1) {
-                parent.body.facingX = 0.1;
-            }
         }
     }
 
