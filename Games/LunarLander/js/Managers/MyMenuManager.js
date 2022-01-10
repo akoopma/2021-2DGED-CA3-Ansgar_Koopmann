@@ -1,5 +1,7 @@
 class MyMenuManager extends MenuManager {
 
+    static audioActive = true;
+
     constructor(id, notificationCenter, keyboardManager) {
 
         super(id);
@@ -125,11 +127,53 @@ class MyMenuManager extends MenuManager {
         // the audio class is clicked
         $('#audio_button').click(function () {
 
-            // Do something...
+            if (MyMenuManager.audioActive) {
+                notificationCenter.notify(
+                    new Notification(
+                        NotificationType.Sound,
+                        NotificationAction.SetVolume,
+                        [
+                            "rocket",
+                            0
+                        ]
+                    )
+                );
 
-            console.log("You clicked the audio button!");
-            
-            // Hint: Send a notification to toggle the audio on/off
+                notificationCenter.notify(
+                    new Notification(
+                        NotificationType.Sound,
+                        NotificationAction.SetVolume,
+                        [
+                            "explosion",
+                            0
+                        ]
+                    )
+                );
+            } else {
+                notificationCenter.notify(
+                    new Notification(
+                        NotificationType.Sound,
+                        NotificationAction.SetVolume,
+                        [
+                            "rocket",
+                            0.4
+                        ]
+                    )
+                );
+
+                notificationCenter.notify(
+                    new Notification(
+                        NotificationType.Sound,
+                        NotificationAction.SetVolume,
+                        [
+                            "explosion",
+                            0.4
+                        ]
+                    )
+                );
+            }
+
+            MyMenuManager.audioActive = !MyMenuManager.audioActive;
         });
 
         // If the exit button is clicked

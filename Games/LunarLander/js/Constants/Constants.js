@@ -1,5 +1,10 @@
 class GameData {
 
+    static AUDIO_CUE_ARRAY = [
+        new AudioCue("rocket", AudioType.Move, 0.4, 1, 0, true),
+        new AudioCue("explosion", AudioType.Move, 0.4, 1, 0, false),
+    ];
+
     static TERRAIN_DATA = {
 
         id: "Terrain",

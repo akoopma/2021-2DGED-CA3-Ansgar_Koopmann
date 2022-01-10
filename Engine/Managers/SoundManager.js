@@ -265,8 +265,12 @@ class AudioCue {
      */
     pause(name) {
 
+        let index = this.findIndex(name);
+
+        let audioCue = this.cueArray[index];
+
         // Get the audio object
-        let audioObject = getAudioObject(name);
+        let audioObject = audioCue.audioObject;
 
         // If an audio object is present
         if (audioObject) {
@@ -275,7 +279,7 @@ class AudioCue {
             if (!audioObject.paused) {
 
                 // Pause the audio object
-                cue.pause();
+                audioObject.pause();
             }
         }
     }
@@ -287,11 +291,13 @@ class AudioCue {
      */
     setVolume(name, volume) {
 
+        let index = this.findIndex(name);
+
         // Get the audio cue
         let audioCue = this.cueArray[index];
 
         // Get the audio object
-        let audioObject = getAudioObject(name);
+        let audioObject = audioCue.audioObject;
 
         // If an audio object is present
         if (audioObject) {

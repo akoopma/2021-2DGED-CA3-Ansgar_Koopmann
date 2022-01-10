@@ -1,4 +1,5 @@
 class ShipMoveController {
+
     constructor(
         notificationCenter,
         keyboardManager,
@@ -84,10 +85,29 @@ class ShipMoveController {
                     [(-this.fuelConsumption * gameTime.elapsedTimeInMs) / 1000]
                 )
             );
+
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.Sound,
+                    NotificationAction.Play,
+                    ["rocket"]
+                )
+            )
+
+
         } else {
             const frameIndex = parent.artist.currentFrameIndex;
             parent.artist.setTake("Idle");
             parent.artist.currentFrameIndex = frameIndex;
+
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.Sound,
+                    NotificationAction.Pause,
+                    ["rocket"]
+                )
+            )
+
         }
     }
 

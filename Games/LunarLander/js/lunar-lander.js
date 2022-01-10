@@ -17,6 +17,7 @@ let keyboardManager;
 let mouseManager;
 let gameStateManager;
 let uiManager;
+let soundManager;
 
 
 // Create a function that will load our game
@@ -59,6 +60,7 @@ function animate(now) {
 // Create a function that will update our game
 function update(gameTime) {
     objectManager.update(gameTime);
+    // debugDrawer.update(gameTime);
 
 }
 
@@ -67,6 +69,7 @@ function draw() {
     clearCanvas();
 
     objectManager.draw(gameTime);
+    // debugDrawer.draw(gameTime);
 
 }
 
@@ -81,6 +84,7 @@ function initializeGame() {
     initializeManagers();
     initializeCameras();
     initializeSprites();
+    // initializeDebugDrawer();
 
 }
 
@@ -133,6 +137,12 @@ function initializeManagers() {
         mouseManager
     );
 
+    soundManager = new SoundManager(
+        "Sound Manager",
+        notificationCenter,
+        GameData.AUDIO_CUE_ARRAY,
+    )
+
 }
 
 function initializeCameras() {
@@ -158,6 +168,16 @@ function initializeCameras() {
     );
 
     cameraManager.add(camera);
+}
+
+function initializeDebugDrawer() {
+
+    debugDrawer = new DebugDrawer(
+        "Debug Drawer",
+        context,
+        objectManager,
+        cameraManager
+    );
 }
 
 function initializeSprites() {

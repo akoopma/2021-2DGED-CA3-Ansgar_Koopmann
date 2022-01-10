@@ -95,9 +95,6 @@ class MyGameStateManager extends GameStateManager {
         let body = argArray[0];
         let multiplier = argArray[1];
 
-        console.log(body.facingX);
-        console.log(body.velocityY);
-
         if (body.velocityY > this.safeLandingSpeed
             || body.facingX < this.safeLandingRotation) {
             this.notificationCenter.notify(
@@ -134,6 +131,14 @@ class MyGameStateManager extends GameStateManager {
 
             this.notificationCenter.notify(
                 new Notification(
+                    NotificationType.Sound,
+                    NotificationAction.Pause,
+                    ["rocket"]
+                )
+            )
+
+            this.notificationCenter.notify(
+                new Notification(
                     NotificationType.UI,
                     NotificationAction.Land,
                     [this.playerScore]
@@ -163,6 +168,31 @@ class MyGameStateManager extends GameStateManager {
 
         this.notificationCenter.notify(
             new Notification(
+                NotificationType.Sound,
+                NotificationAction.Pause,
+                ["rocket"]
+            )
+        );
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.Sound,
+                NotificationAction.Play,
+                ["explosion"]
+            )
+        );
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.Sprite,
+                NotificationAction.RemoveAllByType,
+                [ActorType.Player]
+            )
+        );
+
+
+        this.notificationCenter.notify(
+            new Notification(
                 NotificationType.UI,
                 NotificationAction.UpdateFuel,
                 [this.shipFuel]
@@ -186,6 +216,7 @@ class MyGameStateManager extends GameStateManager {
                 [ActorType.Player]
             )
         );
+
         initializeShip();
 
         if (this.shipFuel > 0) {
@@ -237,6 +268,6 @@ class MyGameStateManager extends GameStateManager {
 
 
     update(gameTime) {
-
+        
     }
 }
