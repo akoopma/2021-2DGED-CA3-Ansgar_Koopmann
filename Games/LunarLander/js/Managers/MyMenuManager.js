@@ -40,6 +40,10 @@ class MyMenuManager extends MenuManager {
                 this.handleLand(notification.notificationArguments);
                 break;
 
+            case NotificationAction.Win:
+                this.handleWin(notification.notificationArguments);
+                break;
+
             default:
                 break;
         }
@@ -92,6 +96,8 @@ class MyMenuManager extends MenuManager {
         $('#land_menu').addClass('hidden');
         $('#crash_menu').hide();
         $('#crash_menu').addClass('hidden');
+        $('#mission_complete_menu').hide();
+        $('#mission_complete_menu').addClass('hidden');
 
 
         // Hide the YOUR_MENU menu
@@ -152,6 +158,27 @@ class MyMenuManager extends MenuManager {
             )
         });
 
+        $('.end_round').click(function () {
+
+            $('#temp').remove();
+            $('#mission_complete_menu').hide();
+            $('#mission_complete_menu').addClass('hidden');
+
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.Menu,
+                    NotificationAction.ShowMenuChanged,
+                    [StatusType.Off]
+                )
+            );
+            notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Play
+                )
+            )
+        });
+
     }
 
     handleCrash() {
@@ -173,6 +200,13 @@ class MyMenuManager extends MenuManager {
 
         $('#land_menu').show();
         $('#land_menu').removeClass('hidden');
+    }
+
+    handleWin(score) {
+        
+        $("#mission_complete_text").append("<h1 id='temp'>Final Score: " + score);
+        $('#mission_complete_menu').show();
+        $('#mission_complete_menu').removeClass('hidden');
     }
 
     update(gameTime) {

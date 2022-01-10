@@ -67,9 +67,13 @@ class MyGameStateManager extends GameStateManager {
                 break;
 
             case NotificationAction.Reset: {
-                this.handleReset();
+                this.handleShipReset();
                 break;
             }
+
+            case NotificationAction.Win: 
+                this.handleWin();
+                break;
 
             default:
                 break;
@@ -173,7 +177,8 @@ class MyGameStateManager extends GameStateManager {
         )
     }
 
-    handleReset() {
+    handleShipReset() {
+
         this.notificationCenter.notify(
             new Notification(
                 NotificationType.Sprite,
@@ -183,13 +188,53 @@ class MyGameStateManager extends GameStateManager {
         );
         initializeShip();
 
+        if (this.shipFuel > 0) {
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Play
+                )
+            );
+        } else {
+            this.notificationCenter.notify(
+                new Notification(
+                    NotificationType.GameState,
+                    NotificationAction.Win
+                )
+            )
+        }
+    }
+
+    handleWin() {
         this.notificationCenter.notify(
             new Notification(
-                NotificationType.GameState,
-                NotificationAction.Play
+                NotificationType.Menu,
+                NotificationAction.Win,
+                [this._playerScore]
+            )
+        );
+
+        this._playerScore = 0;
+        this._shipFuel = GameData.SHIP_START_FUEL;
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.UI,
+                NotificationAction.UpdateFuel,
+                [this._shipFuel]
+            )
+        );
+
+        this.notificationCenter.notify(
+            new Notification(
+                NotificationType.UI,
+                NotificationAction.Land,
+                [this._playerScore]
             )
         );
     }
+
+
 
     update(gameTime) {
 
