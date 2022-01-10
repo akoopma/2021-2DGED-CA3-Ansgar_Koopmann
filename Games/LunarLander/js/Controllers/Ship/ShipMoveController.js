@@ -143,9 +143,7 @@ class ShipMoveController {
         for (let i = 0; i < groundArray.length; i++) {
             const ground = groundArray[i];
 
-            let collisionType = Collision.GetCollisionLocationType(parent, ground);
-
-            if (collisionType !== null) {
+            if (DiagonalCollision.CheckForCollision(parent, ground)) {
                 this.notificationCenter.notify(
                     new Notification(
                         NotificationType.GameState,
