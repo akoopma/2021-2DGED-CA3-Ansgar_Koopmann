@@ -1,17 +1,3 @@
-/* @font-face kit by Fonts2u (https://fonts2u.com) */
-@font-face {
-  font-family: "Bender-Light";
-  src: url("../assets/Fonts/Bender_Light/Bender_Light.eot") format("eot"),
-    url("../assets/Fonts/Bender_Light/Bender_Light.woff") format("woff"),
-    url("../assets/Fonts/Bender_Light/Bender_Light.ttf") format("truetype"),
-    url("../assets/Fonts/Bender_Light/Bender_Light.svg#Bender-Light") format("svg");
-}
-
-@font-face {
-    font-family: 'bohemian-typewriter';
-    src: URL('../assets/Fonts/Bohemian_Typewriter_Regular/Bohemian\ Typewriter.ttf') format('truetype');
-  }
-
 @font-face {
   font-family: 'nixie-one';
   src: URL('../assets/Fonts/Nixie_One/NixieOne.ttf') format('truetype');
