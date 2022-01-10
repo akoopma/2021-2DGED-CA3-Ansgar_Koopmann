@@ -60,7 +60,6 @@ function animate(now) {
 // Create a function that will update our game
 function update(gameTime) {
     objectManager.update(gameTime);
-    // debugDrawer.update(gameTime);
 
 }
 
@@ -69,7 +68,6 @@ function draw() {
     clearCanvas();
 
     objectManager.draw(gameTime);
-    // debugDrawer.draw(gameTime);
 
 }
 
@@ -84,7 +82,6 @@ function initializeGame() {
     initializeManagers();
     initializeCameras();
     initializeSprites();
-    // initializeDebugDrawer();
 
 }
 
@@ -168,16 +165,6 @@ function initializeCameras() {
     );
 
     cameraManager.add(camera);
-}
-
-function initializeDebugDrawer() {
-
-    debugDrawer = new DebugDrawer(
-        "Debug Drawer",
-        context,
-        objectManager,
-        cameraManager
-    );
 }
 
 function initializeSprites() {
