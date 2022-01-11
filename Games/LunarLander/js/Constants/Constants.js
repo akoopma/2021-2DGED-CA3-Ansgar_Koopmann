@@ -132,17 +132,18 @@ class GameData {
     }
 
     static SHIP_START_POSITION = new Vector2(20,20);
-    static SHIP_START_VELOCITY = new Vector2(0.25,0);
+    static SHIP_START_VELOCITY = new Vector2(0.5,0);
+    static SHIP_GRAVITY_ACCELERATION = 0.075;
     static SHIP_START_FACING = new Vector2(1, 0);
     static SHIP_START_FUEL = 1000;
     static SHIP_FUEL_CONSUMPTION = 25;
     static SHIP_MOVE_KEYS = [Keys.A, Keys.D, Keys.W];
     static SHIP_TURN_RATE = Math.PI;
-    static SHIP_THRUST_ACCELERATION = 0.1;
+    static SHIP_THRUST_ACCELERATION = 0.15;
     static SHIP_SPRITE_ROTATION_OFFSET = Math.PI/2;
-    static SHIP_PERCECT_LAND_VELOCITY = 0.05
+    static SHIP_PERCECT_LAND_VELOCITY = 0.1;
     static SHIP_PERFECT_LAND_X_ROTATION = 0.995;
-    static SHIP_SAFE_LAND_VELOCITY = 0.09;
+    static SHIP_SAFE_LAND_VELOCITY = 0.2;
     static SHIP_SAFE_LAND_X_ROTATION = 0.98;
 
     static SHIP_ANIMATION_DATA = {

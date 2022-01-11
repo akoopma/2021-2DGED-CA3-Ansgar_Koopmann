@@ -9,7 +9,8 @@ class ShipMoveController {
         thrustAcceleration,
         turnRate,
         fuelConsumption,
-        rotationOffset
+        rotationOffset,
+        gravityAcceleration,
     ) {
         this.notificationCenter = notificationCenter;
         this.keyboardManager = keyboardManager;
@@ -21,6 +22,7 @@ class ShipMoveController {
         this.turnRate = turnRate;
         this.fuelConsumption = fuelConsumption;
         this.rotationOffset = rotationOffset;
+        this.gravityAcceleration = gravityAcceleration;
     }
 
     update(gameTime, parent) {
@@ -33,7 +35,11 @@ class ShipMoveController {
     }
 
     applyForces(gameTime, parent) {
-        parent.body.applyGravity(gameTime);
+        this.applyGravity(gameTime, parent);
+    }
+
+    applyGravity(gameTime, parent) {
+        parent.body.velocityY = parent.body.velocityY + (this.gravityAcceleration * (gameTime.elapsedTimeInMs / 1000));
     }
 
     handleInput(gameTime, parent) {
@@ -48,7 +54,7 @@ class ShipMoveController {
             && !parent.body.onGround
         ) {
             parent.body.turnCounterClockwise(
-                (this.turnRate * gameTime.elapsedTimeInMs) / 1000
+                (this.turnRate * (gameTime.elapsedTimeInMs / 1000))
             );
         }
         if (
@@ -57,7 +63,7 @@ class ShipMoveController {
             && !parent.body.onGround
         ) {
             parent.body.turnClockwise(
-                (this.turnRate * gameTime.elapsedTimeInMs) / 1000
+                (this.turnRate * (gameTime.elapsedTimeInMs / 1000))
             );
         }
     }
@@ -70,7 +76,7 @@ class ShipMoveController {
         ) {
             parent.body.turnCounterClockwise(this.rotationOffset);
             parent.body.addVelocityFacing(
-                (this.thrustAcceleration * gameTime.elapsedTimeInMs) / 1000
+                (this.thrustAcceleration * (gameTime.elapsedTimeInMs / 1000))
             );
             parent.body.turnCounterClockwise(-this.rotationOffset);
 
@@ -82,7 +88,7 @@ class ShipMoveController {
                 new Notification(
                     NotificationType.GameState,
                     NotificationAction.UpdateFuel,
-                    [(-this.fuelConsumption * gameTime.elapsedTimeInMs) / 1000]
+                    [(-this.fuelConsumption * (gameTime.elapsedTimeInMs / 1000))]
                 )
             );
 

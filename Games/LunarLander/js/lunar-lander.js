@@ -360,6 +360,7 @@ function initializeShip() {
             GameData.SHIP_TURN_RATE,
             GameData.SHIP_FUEL_CONSUMPTION,
             GameData.SHIP_SPRITE_ROTATION_OFFSET,
+            GameData.SHIP_GRAVITY_ACCELERATION,
         )
     )
     objectManager.add(sprite);
