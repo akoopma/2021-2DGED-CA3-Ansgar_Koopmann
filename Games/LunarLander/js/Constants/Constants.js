@@ -139,7 +139,7 @@ class GameData {
     static SHIP_FUEL_CONSUMPTION = 25;
     static SHIP_MOVE_KEYS = [Keys.A, Keys.D, Keys.W];
     static SHIP_TURN_RATE = Math.PI;
-    static SHIP_THRUST_ACCELERATION = 0.15;
+    static SHIP_THRUST_ACCELERATION = 0.2;
     static SHIP_SPRITE_ROTATION_OFFSET = Math.PI/2;
     static SHIP_PERCECT_LAND_VELOCITY = 0.1;
     static SHIP_PERFECT_LAND_X_ROTATION = 0.995;
