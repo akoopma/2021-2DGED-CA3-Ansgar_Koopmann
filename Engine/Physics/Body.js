@@ -11,7 +11,6 @@ const FrictionType = {
 };
 
 const GravityType = {
-    Moon: 0.00025,
     Weak: 0.2,
     Normal: 0.4,
     Strong: 0.7

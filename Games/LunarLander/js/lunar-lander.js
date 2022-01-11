@@ -347,7 +347,7 @@ function initializeShip() {
     sprite.body.velocityX = GameData.SHIP_START_VELOCITY.x;
     sprite.body.velocityY = GameData.SHIP_START_VELOCITY.y;
     sprite.body.friction = FrictionType.Low;
-    sprite.body.gravity = GravityType.Moon;
+    sprite.body.gravity = GameData.SHIP_GRAVITY_ACCELERATION;
 
     sprite.attachController(
         new ShipMoveController(
